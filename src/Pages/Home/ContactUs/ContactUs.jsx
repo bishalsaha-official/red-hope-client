@@ -3,18 +3,29 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import contactBg from '../../../assets/home/contactBg.jpg'
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const ContactUs = () => {
-
+    const axiosPublic = useAxiosPublic()
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const onSubmit = (data) => {
-        console.log('Contact Form Data:', data);
-        reset();
-        // You can POST this data to your backend or send email via nodemailer
+    const onSubmit = async (data) => {
+        const res = await axiosPublic.post('/contacts', data)
+        if (res.data.insertedId) {
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Thanks for reaching out! The RedHope team will contact you soon.",
+                showConfirmButton: false,
+                timer: 2000
+            });
+            reset()
+        }
+        return res.data
     };
 
     return (
-        <section style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${contactBg})`,}} className={"py-16 bg-cover bg-center bg-no-repeat"}>
+        <section style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${contactBg})`, }} className={"py-16 bg-cover bg-center bg-no-repeat"}>
             <div className="max-w-10/12 mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
                 {/* LEFT SIDE */}
                 <div>
@@ -70,10 +81,7 @@ const ContactUs = () => {
                             {errors.message && <span className="text-[#EF3D32] text-sm">Message is required</span>}
                         </div>
 
-                        <button
-                            type="submit"
-                            className="w-full bg-[#EF3D32] text-white py-3 rounded-lg hover:bg-red-600 transition"
-                        >
+                        <button type="submit" className="w-full bg-[#EF3D32] text-white py-3 rounded-lg hover:bg-red-600 transition">
                             Send Message
                         </button>
                     </form>
