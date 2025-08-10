@@ -1,12 +1,34 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import donor from '../../assets/register/donor.jpg'
+import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { useState } from "react";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { loginUser } = useAuth()
+    const [errorsMsg, setErrorsMsg] = useState('')
+
     const onSubmit = async (data) => {
-        console.log(data)
+        const email = data.email
+        const password = data.password
+        // login user
+        loginUser(email, password)
+            .then(result => {
+                console.log(result.user)
+                Swal.fire({
+                    title: "Login Successful",
+                    icon: "success",
+                    draggable: true
+                });
+            })
+            .catch(error => {
+                console.log(error.message)
+                setErrorsMsg(error.message)
+            })
     }
+
     return (
         <section className="min-h-screen flex items-center justify-center p-4 bg-[#FAF3E0]">
             <div className="max-w-5xl bg-[#F7F7F7] items-center rounded-lg shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
@@ -29,9 +51,10 @@ const Login = () => {
                             <p className="text-[#EF3D32] font-semibold mt-2">Password is required</p>
                         )}
 
-                        <button type="submit" className="w-full bg-[#EF3D32] hover:bg-red-700 text-white py-2 rounded">
+                        <button type="submit" className="w-full bg-[#EF3D32] hover:bg-red-700 cursor-pointer text-white py-2 rounded">
                             Login
                         </button>
+                        <p className="text-[#EF3D32]">{errorsMsg ? "Something went wrong. try again." : ''}</p>
                     </form>
                     <p className="text-center my-5">No account yet? <Link className="text-[#EF3D32]" to='/register'>Register</Link></p>
                 </div>

@@ -1,12 +1,20 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from '../assets/logo/icon.png'
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
+    const { user, logoutUser } = useAuth()
+
+    const handleSignOut = () => {
+        logoutUser()
+    }
+
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/">Donation requests</NavLink></li>
         <li><NavLink to="/">Blog</NavLink></li>
     </>
+
     return (
         <>
             <div className="navbar bg-base-100 py-5 px-5 fixed z-10 shadow-sm">
@@ -34,9 +42,28 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to="/login">
-                        <button className="btn bg-[#EF3D32] text-white p-5">Login</button>
-                    </Link>
+                    {
+                        user && user.email ?
+                            <>
+                                <div className="dropdown dropdown-end cursor-pointer">
+                                    <div tabIndex={0} role="button" className="m-1">
+                                        <div className="avatar">
+                                            <div className="w-12 rounded-full">
+                                                <img src={user?.photoURL}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul tabIndex={0} className="dropdown-content bg-[#FFF2F2] menu rounded-box z-1 w-52 p-3 shadow-lg">
+                                        <li className="mb-3 text-xl"><Link to="/dashboard">Dashboard</Link></li>
+                                        <li><button onClick={handleSignOut} className="btn bg-[#EF3D32] text-white">SignOut</button></li>
+                                    </ul>
+                                </div>
+                            </> :
+                            <Link to="/login">
+                                <button className="btn bg-[#EF3D32] text-white p-5">Login</button>
+                            </Link>
+                    }
+
                 </div>
             </div>
         </>

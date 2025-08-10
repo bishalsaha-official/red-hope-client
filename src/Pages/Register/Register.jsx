@@ -134,7 +134,7 @@ const Register = () => {
                         <select {...register("district", { required: true })} className="select select-bordered w-full">
                             <option value="">Select District</option>
                             {
-                                districts.map(district => <option key={district.id}>{district.name}</option>)
+                                districts.map(district => <option key={district.id} value={district.name}>{district.name}</option>)
                             }
                         </select>
                         {errors.district && <p className="text-[#EF3D32] text-sm">District is required</p>}
@@ -143,7 +143,7 @@ const Register = () => {
                         <select {...register("upazila", { required: true })} className="select select-bordered w-full">
                             <option value="">Select Upazila</option>
                             {
-                                upazilas.map(upazila => <option key={upazila.id}>{upazila.name}</option>)
+                                upazilas.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)
                             }
                         </select>
                         {errors.upazila && <p className="text-[#EF3D32] text-sm">Upazila is required</p>}
@@ -172,7 +172,7 @@ const Register = () => {
                         <input type="password" placeholder="Confirm Password" {...register("confirm_password", { required: true, validate: value => value === password })} className="input input-bordered w-full" />
                         {errors.confirm_password && <p className="text-[#EF3D32] text-sm">Passwords do not match</p>}
 
-                        <button type="submit" className="w-full bg-[#EF3D32] hover:bg-red-700 text-white py-2 rounded">
+                        <button type="submit" className="w-full bg-[#EF3D32] hover:bg-red-700 cursor-pointer text-white py-2 rounded">
                             Register
                         </button>
                     </form>
