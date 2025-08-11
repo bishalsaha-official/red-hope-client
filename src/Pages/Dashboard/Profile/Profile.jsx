@@ -1,27 +1,64 @@
-import { QueryClient, useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import useUser from "../../../Hooks/useUser";
 
 const Profile = () => {
-    const { user } = useAuth()
+    const { updateUserProfile } = useAuth()
     const axiosSecure = useAxiosSecure()
+    const axiosPublic = useAxiosPublic()
     const [isEditing, setIsEditing] = useState(false);
-
-    const { data: profile = {}, } = useQuery({
-        queryKey: ['profile', user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/users/${user.email}`)
-            return res.data
-        }
-    })
-
+    const image_hosting_key = import.meta.env.VITE_Image_Hosting_Key;
+    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+    const [profile, refetch] = useUser()
     const { register, handleSubmit, reset } = useForm();
 
     // Update profile
     const onSubmit = async (data) => {
         console.log(data)
+        let imageUrl = profile.image;
+        if (data.image && data.image.length > 0) {
+            const imageFile = { image: data.image[0] }
+            const imgRes = await axiosPublic.post(image_hosting_api, imageFile, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            })
+            if (!imgRes.data.success) {
+                Swal.fire({ icon: "error", title: "Image upload failed" });
+                return;
+            }
+            imageUrl = imgRes.data.data.display_url;
+        }
+
+        await updateUserProfile(data.name, imageUrl)
+            .then(async () => {
+                const userInformation = {
+                    name: data.name,
+                    image: imageUrl,
+                    bloodGroup: data.bloodGroup,
+                    district: data.district,
+                    upazila: data.upazila
+                }
+
+                const res = await axiosSecure.patch(`/users/${profile._id}`, userInformation)
+                if (res.data.modifiedCount > 0) {
+                    Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: "Profile updated successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    refetch();
+                    setIsEditing(false);
+                }
+            })
+
+
     };
 
     return (
@@ -33,7 +70,7 @@ const Profile = () => {
                     <div className="flex justify-center mb-6">
                         <div className="avatar">
                             <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                <img src={profile.image} alt="avatar" />
+                                <img src={profile.image} alt="profile" />
                             </div>
                         </div>
                     </div>
@@ -125,7 +162,7 @@ const Profile = () => {
                     {/* Save Button */}
                     {isEditing && (
                         <div className="pt-4">
-                            <button className="btn btn-success text-white" type="submit">
+                            <button type="submit" className="btn btn-success text-white" >
                                 Save Changes
                             </button>
                         </div>

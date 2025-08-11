@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import donor from '../../assets/register/donor.jpg'
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
@@ -9,6 +9,10 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { loginUser } = useAuth()
     const [errorsMsg, setErrorsMsg] = useState('')
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const from = location.state?.from?.pathname || "/";
 
     const onSubmit = async (data) => {
         const email = data.email
@@ -24,6 +28,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.log(error.message)
