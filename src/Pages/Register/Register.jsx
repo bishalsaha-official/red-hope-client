@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Await, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
@@ -73,7 +73,6 @@ const Register = () => {
                             status: "active"
                         };
                         const res = await axiosPublic.post('/users', userInformation);
-                        console.log("Backend Response:", res.data);
                         if (res.data.insertedId) {
                             Swal.fire({
                                 position: "top-center",
@@ -120,7 +119,7 @@ const Register = () => {
                         {errors.email && <p className="text-[#EF3D32] text-sm">Email is required</p>}
 
                         {/* Photo */}
-                        <input type="file" {...register("image", { required: true })} className="file-input file-input-bordered w-full file-input-secondary" />
+                        <input type="file" {...register("image", { required: true })} className="file-input file-input-bordered w-full file-input-error" />
                         {errors.image && <p className="text-[#EF3D32] text-sm">Photo is required</p>}
 
                         {/* Blood Group */}

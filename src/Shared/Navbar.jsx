@@ -1,12 +1,20 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from '../assets/logo/icon.png'
 import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
     const { user, logoutUser } = useAuth()
 
     const handleSignOut = () => {
         logoutUser()
+            .then(() => {
+                Swal.fire({
+                    title: "You’ve been signed out. Have a great day",
+                    icon: "success",
+                    draggable: true
+                });
+            })
     }
 
     const links = <>
@@ -49,7 +57,7 @@ const Navbar = () => {
                                     <div tabIndex={0} role="button" className="m-1">
                                         <div className="avatar">
                                             <div className="w-12 rounded-full">
-                                                <img src={user?.photoURL}/>
+                                                <img src={user?.photoURL} />
                                             </div>
                                         </div>
                                     </div>

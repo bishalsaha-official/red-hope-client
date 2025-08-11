@@ -18,9 +18,11 @@ const Login = () => {
             .then(result => {
                 console.log(result.user)
                 Swal.fire({
-                    title: "Login Successful",
+                    position: "top-center",
                     icon: "success",
-                    draggable: true
+                    title: "You’re now logged in",
+                    showConfirmButton: false,
+                    timer: 1500
                 });
             })
             .catch(error => {
