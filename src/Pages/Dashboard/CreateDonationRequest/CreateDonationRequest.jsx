@@ -2,18 +2,45 @@ import { useForm } from "react-hook-form";
 import useDistrict from "../../../Hooks/useDistrict";
 import useUpazilas from "../../../Hooks/useUpazilas";
 import useAuth from "../../../Hooks/useAuth";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const CreateDonationRequest = () => {
     const [upazilas] = useUpazilas()
     const [districts] = useDistrict()
     const { user } = useAuth()
+    const axiosPublic = useAxiosPublic()
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log('Form submitted:', data);
-        reset()
+        const donationInfo = {
+            requesterName: data.requesterName,
+            requesterEmail: data.requesterEmail,
+            recipientName: data.recipientName,
+            bloodGroup: data.bloodGroup,
+            district: data.district,
+            upazila: data.upazila,
+            donationDate: data.donationDate,
+            donationTime: data.donationTime,
+            fullAddress: data.fullAddress,
+            hospitalName: data.hospitalName,
+            requestMessage: data.requestMessage,
+            status: 'pending'
+        }
+
+        const res = await axiosPublic.post('/donation-request', donationInfo)
+        console.log(res.data)
+        if (res.data.insertedId) {
+            reset()
+            Swal.fire({
+                title: "Your request has been sent",
+                icon: "success",
+                draggable: true
+            });
+        }
     };
 
     return (

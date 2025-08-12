@@ -1,9 +1,8 @@
-import { FaHome } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
+import { FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 
-const Dashboard = () => {
-
+const DashboardLayout = () => {
     return (
         <>
             <div className="flex min-h-screen w-full">
@@ -34,4 +33,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default DashboardLayout;
