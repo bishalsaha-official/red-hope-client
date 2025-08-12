@@ -8,19 +8,21 @@ const Dashboard = () => {
         <>
             <div className="flex min-h-screen w-full">
                 {/* Aside */}
-                <aside className="w-72 bg-[#E57373] text-white p-6">
+                <aside className="w-80 bg-[#E57373] text-white p-6">
                     <div className="flex items-center gap-2.5 mb-10">
                         <h2 className="text-xl font-bold">RED HOPE</h2>
                     </div>
                     <ul className="menu uppercase w-full font-semibold">
-                        <li className="text-xl"><NavLink to='/dashboard/profile'><CgProfile></CgProfile> Profile</NavLink></li>
+                        <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
+                        <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
+                        <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request Page </NavLink></li>
                     </ul>
 
                     <div className="border-t border-white my-6"></div>
 
                     {/* Shared */}
                     <ul className="menu uppercase font-semibold">
-                        <li className="text-xl"><NavLink to="/"><FaHome></FaHome> Home</NavLink></li>
+                        <li><NavLink to="/"> <FaHome className="text-xl"></FaHome> Home</NavLink> </li>
                     </ul>
                 </aside>
                 {/* Main Content */}

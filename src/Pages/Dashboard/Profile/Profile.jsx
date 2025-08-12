@@ -62,7 +62,7 @@ const Profile = () => {
     };
 
     return (
-        <div className="max-w-8/12 mx-auto mt-10 bg-white rounded-3xl">
+        <div className="max-w-8/12 mx-auto mt-10 shadow-sm rounded-3xl">
             <div>
                 <div className="text-center p-5 mb-6 bg-[#E57373] rounded-t-3xl" >
                     <h1 className="text-2xl font-bold text-white mb-5">My Profile</h1>

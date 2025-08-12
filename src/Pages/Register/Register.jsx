@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import donor from '../../assets/register/donor.jpg'
+import useDistrict from "../../Hooks/useDistrict";
+import useUpazilas from "../../Hooks/useUpazilas";
 
 const Register = () => {
-    const [upazilas, setUpazilas] = useState([])
-    const [districts, setDistricts] = useState([])
+    const [upazilas] = useUpazilas()
+    const [districts] = useDistrict()
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const password = watch("password");
     const axiosPublic = useAxiosPublic()
@@ -16,22 +17,6 @@ const Register = () => {
     const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
     const { createUser, updateUserProfile } = useAuth()
     const navigate = useNavigate()
-
-    useEffect(() => {
-        fetch('/public/upazilas.json')
-            .then(res => res.json())
-            .then(data => {
-                setUpazilas(data[2].data)
-            })
-    }, [])
-
-    useEffect(() => {
-        fetch('/public/districts.json')
-            .then(res => res.json())
-            .then(data => {
-                setDistricts(data[2].data)
-            })
-    }, [])
 
     const onSubmit = async (data) => {
         console.log(data)
