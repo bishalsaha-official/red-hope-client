@@ -15,7 +15,7 @@ const Banner = () => {
                 </h1>
                 <p className='md:text-xl'>RedHope is a community-driven platform dedicated to making blood donation faster, safer, and more accessible. Whether you're looking to donate or in urgent need, we're here to connect lives with compassion and hope.</p>
                 <div className='mt-5'>
-                    <Link>
+                    <Link to='/register'>
                         <button className='btn m-3 bg-[#EF3D32] text-white border-0 px-10 py-5'>Join as a donor</button>
                     </Link>
                     <Link>

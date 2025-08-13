@@ -1,22 +1,26 @@
-import useDonationRequest from "../../../Hooks/useDonationRequest";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
-const MyDonationRequest = () => {
-    const [donationRequest] = useDonationRequest()
+const DonorDashboard = () => {
+    const { user } = useAuth()
+    const axiosSecure = useAxiosSecure()
+
+    // Recent 3 Donation request
+    const { data: recentDonation = [] } = useQuery({
+        queryKey: ['recentDonation', user.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`http://localhost:5000/donation-request/recent?email=${user.email}`)
+            return res.data
+        }
+    })
 
     return (
-        <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
-            <div className="text-center p-5 mb-6 bg-[#E57373] rounded-t-3xl" >
-                <h1 className="text-2xl font-bold text-white mb-5">My Donation Request</h1>
-            </div>
-            <div className="my-5 mx-5">
-                <h2 className="text-xl font-bold mb-2">Status:</h2>
-                <select defaultValue="Pick a language" className="select select-secondary w-full">
-                    <option value="">Status</option>
-                    <option value="pending">pending</option>
-                    <option value="inprogress">inprogress</option>
-                    <option value="done">done</option>
-                    <option value="canceled">canceled</option>
-                </select>
+        <div className="max-w-10/12 mx-auto mt-5 py-5 rounded-2xl shadow-sm">
+            <h2 className="text-2xl font-bold mb-5 p-5">Welcome Back, {user.displayName}</h2>
+            <div className="text-center p-5 mb-6 bg-[#E57373]" >
+                <h1 className="text-2xl font-bold text-white mb-5">My Recent Donation Request</h1>
             </div>
             <div>
                 <div className="overflow-x-auto">
@@ -36,7 +40,7 @@ const MyDonationRequest = () => {
                         </thead>
                         <tbody className="font-semibold capitalize">
                             {
-                                donationRequest.map((donation, index) => <tr key={index}>
+                                recentDonation.map((donation, index) => <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{donation.recipientName}</td>
                                     <td>{donation.district},<br /> {donation.upazila}</td>
@@ -57,7 +61,7 @@ const MyDonationRequest = () => {
                                                     </div>
                                                 </>
                                                 :
-                                                <button className="btn btn-success btn-sm text-white">{donation.status}...</button>
+                                                <button className="btn btn-success btn-sm text-white">{donation.status}</button>
                                         }
                                     </td>
                                     <td>
@@ -73,8 +77,13 @@ const MyDonationRequest = () => {
                     </table>
                 </div>
             </div>
+            <div className="text-center">
+                <Link to='/dashboard/my-donation-requests'>
+                    <button className="btn btn-outline btn-secondary">View All Request</button>
+                </Link>
+            </div>
         </div>
     );
 };
 
-export default MyDonationRequest;
+export default DonorDashboard;
