@@ -30,7 +30,7 @@ const AllUsers = () => {
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
-                    <thead>
+                    <thead className="text-center">
                         <tr>
                             <th>#</th>
                             <th>Photo</th>
@@ -41,7 +41,7 @@ const AllUsers = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="text-center">
                         {
                             users.map((user, index) => <tr key={user._id}>
                                 <td>{index + 1}</td>
@@ -52,10 +52,10 @@ const AllUsers = () => {
                                         </div>
                                     </div>
                                 </td>
-                                <td>{user.name}</td>
+                                <td className="capitalize">{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user.role}</td>
-                                <td>{user.status}</td>
+                                <td className="capitalize">{user.role}</td>
+                                <td className="capitalize">{user.status}</td>
                                 <td>
                                     <div className="flex flex-col gap-1">
                                         <button className="btn btn-xs btn-primary text-white">Volunteer</button>
