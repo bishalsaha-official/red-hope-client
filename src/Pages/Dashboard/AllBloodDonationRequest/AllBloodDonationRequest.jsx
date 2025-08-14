@@ -19,8 +19,8 @@ const AllBloodDonationRequest = () => {
             </div>
             <div className="my-5 mx-5">
                 <h2 className="text-xl font-bold mb-2">Status:</h2>
-                <select defaultValue="Pick a language" className="select select-secondary w-full">
-                    <option value="">Status</option>
+                <select defaultValue="" className="select select-secondary w-full">
+                    <option value="" disabled>Status</option>
                     <option value="pending">pending</option>
                     <option value="inprogress">inprogress</option>
                     <option value="done">done</option>

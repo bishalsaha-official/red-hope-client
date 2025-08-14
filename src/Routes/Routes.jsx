@@ -11,6 +11,8 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AllBloodDonationRequest from "../Pages/Dashboard/AllBloodDonationRequest/AllBloodDonationRequest";
+import ContentManagement from "../Pages/Dashboard/ContentManagement/ContentManagement";
+import AddBlog from "../Pages/Dashboard/AddBlog/AddBlog";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +62,14 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/all-donation-requests',
                 element: <AllBloodDonationRequest></AllBloodDonationRequest>
+            },
+            {
+                path: '/dashboard/content-management',
+                element: <ContentManagement></ContentManagement>
+            },
+            {
+                path: '/dashboard/content-management/add-blog',
+                element: <AddBlog></AddBlog>
             }
         ]
     }

@@ -21,6 +21,7 @@ const DashboardLayout = () => {
                                 <li><NavLink to='/dashboard/all-donation-requests'> <CgProfile className="text-xl"></CgProfile>All Donation Request </NavLink></li>
                                 <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
                                 <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
+                                <li><NavLink to='/dashboard/content-management'> <CgProfile className="text-xl"></CgProfile>Content Management </NavLink></li>
                             </ul> :
                             <ul className="menu uppercase w-full font-semibold">
                                 <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
