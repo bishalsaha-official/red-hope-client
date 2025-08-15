@@ -12,6 +12,8 @@ const AllBloodDonationRequest = () => {
         }
     })
 
+    const admin = true;
+
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
             <div className="text-center p-5 mb-6 bg-[#E57373] rounded-t-3xl" >
@@ -40,7 +42,9 @@ const AllBloodDonationRequest = () => {
                                 <th>Hospital Name</th>
                                 <th>Blood Group</th>
                                 <th>Donation Status</th>
-                                <th>Action</th>
+                                {
+                                    admin ? <th>Action</th> : ''
+                                }
                             </tr>
                         </thead>
                         <tbody className="font-semibold text-center capitalize">
@@ -69,13 +73,16 @@ const AllBloodDonationRequest = () => {
                                                 <button className="btn btn-success btn-sm text-white">{donation.status}...</button>
                                         }
                                     </td>
-                                    <td>
-                                        <div className="flex flex-col gap-2">
-                                            <button className="btn btn-xs btn-info text-white">View</button>
-                                            <button className="btn btn-xs btn-accent text-white">Edit</button>
-                                            <button className="btn btn-xs btn-error text-white">Delete</button>
-                                        </div>
-                                    </td>
+                                    {
+                                        admin ?
+                                            <td>
+                                                <div className="flex flex-col gap-2">
+                                                    <button className="btn btn-xs btn-info text-white">View</button>
+                                                    <button className="btn btn-xs btn-accent text-white">Edit</button>
+                                                    <button className="btn btn-xs btn-error text-white">Delete</button>
+                                                </div>
+                                            </td> : ''
+                                    }
                                 </tr>)
                             }
                         </tbody>

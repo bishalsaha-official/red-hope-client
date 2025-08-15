@@ -3,7 +3,8 @@ import { FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
-    const isAdmin = true;
+    const isAdmin = false;
+    const volunteer = true;
 
     return (
         <>
@@ -22,12 +23,22 @@ const DashboardLayout = () => {
                                 <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
                                 <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
                                 <li><NavLink to='/dashboard/content-management'> <CgProfile className="text-xl"></CgProfile>Content Management </NavLink></li>
-                            </ul> :
-                            <ul className="menu uppercase w-full font-semibold">
-                                <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
-                                <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
-                                <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
                             </ul>
+                            :
+                            volunteer ?
+                                <ul className="menu uppercase w-full font-semibold">
+                                    <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
+                                    <li><NavLink to='/dashboard/all-donation-requests'> <CgProfile className="text-xl"></CgProfile>All Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/content-management'> <CgProfile className="text-xl"></CgProfile>Content Management </NavLink></li>
+                                </ul>
+                                :
+                                <ul className="menu uppercase w-full font-semibold">
+                                    <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
+                                    <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
+                                </ul>
                     }
 
                     <div className="border-t border-white my-6"></div>
