@@ -17,7 +17,6 @@ const AllUsers = () => {
 
     // Make Admin User
     const handleMakeAdmin = (id) => {
-        console.log(id)
         Swal.fire({
             title: "Are you sure?",
             text: "You Want to Make Admin this user From Donor ",
@@ -45,7 +44,6 @@ const AllUsers = () => {
 
     // Make Volunteer User
     const handleMakeVolunteer = (id) => {
-        console.log(id)
         Swal.fire({
             title: "Are you sure?",
             text: "You Want to Make Volunteer this user From Donor ",
@@ -63,6 +61,60 @@ const AllUsers = () => {
                     Swal.fire({
                         title: "Updated",
                         text: "This Donor is now On Volunteer",
+                        icon: "success"
+                    });
+                }
+
+            }
+        });
+    }
+
+    // Make Block User
+    const handleUserBlock = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You Want to Block This User",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Block it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const updateRole = { status: 'block' }
+                const res = await axiosSecure.patch(`/users/block/${id}`, updateRole)
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        title: "Blocked",
+                        text: "This user has been blocked",
+                        icon: "success"
+                    });
+                }
+
+            }
+        });
+    }
+
+    // Make Unblock User
+    const handleUserUnBlock = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You Want to Unblock This User",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Unblock"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const updateRole = { status: 'active' }
+                const res = await axiosSecure.patch(`/users/unblock/${id}`, updateRole)
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        title: "Blocked",
+                        text: "This user has been Active Again",
                         icon: "success"
                     });
                 }
@@ -129,7 +181,7 @@ const AllUsers = () => {
                     </thead>
                     <tbody className="text-center">
                         {
-                            users.map((user, index) => <tr key={user._id}>
+                            users.map((user, index) => <tr key={user._id} >
                                 <td>{index + 1}</td>
                                 <td>
                                     <div className="avatar">
@@ -141,12 +193,16 @@ const AllUsers = () => {
                                 <td className="capitalize">{user.name}</td>
                                 <td>{user.email}</td>
                                 <td className="capitalize">{user.role}</td>
-                                <td className="capitalize">{user.status}</td>
+                                <td className={`capitalize font-semibold ${user.status === 'active' ? 'text-green-500' : 'text-blue-950'}`}> {user.status}</td>
                                 <td>
                                     <div className="flex flex-col gap-1">
-                                        <button onClick={() => handleMakeVolunteer(user._id)} className="btn btn-xs btn-primary text-white">Volunteer</button>
+                                        <button onClick={() => handleMakeVolunteer(user._id)} className="btn btn-xs btn-info text-white">Volunteer</button>
                                         <button onClick={() => handleMakeAdmin(user._id)} className="btn btn-xs btn-success text-white">Admin</button>
-                                        <button className="btn btn-xs btn-warning text-white">Block</button>
+                                        {
+                                            user.status === 'active' ?
+                                                <button onClick={() => handleUserBlock(user._id)} className="btn btn-xs btn-warning text-white">Block</button> :
+                                                <button onClick={() => handleUserUnBlock(user._id)} className="btn btn-xs btn-warning text-white">Unblock</button>
+                                        }
                                         <button onClick={() => handleDeleteUser(user._id)} className="btn btn-xs btn-error text-white">Delete</button>
                                     </div>
                                 </td>
