@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAuth from "../../../Hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const AllBloodDonationRequest = () => {
     const axiosSecure = useAxiosSecure()
+    const { user } = useAuth()
 
     const { data: donationRequest = [] } = useQuery({
         queryKey: ['donationRequest'],
@@ -33,7 +36,7 @@ const AllBloodDonationRequest = () => {
                 <div className="overflow-x-auto">
                     <table className="table">
                         {/* head */}
-                        <thead className="text-center">
+                        <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Recipient Name</th>
@@ -47,7 +50,7 @@ const AllBloodDonationRequest = () => {
                                 }
                             </tr>
                         </thead>
-                        <tbody className="font-semibold text-center capitalize">
+                        <tbody className="font-semibold capitalize">
                             {
                                 donationRequest.map((donation, index) => <tr key={index}>
                                     <td>{index + 1}</td>
@@ -65,8 +68,8 @@ const AllBloodDonationRequest = () => {
                                                         <button className="btn btn-xs btn-warning text-white">Cancel</button>
                                                     </div>
                                                     <div>
-                                                        <small>{donation.requesterName}</small><br />
-                                                        <small>{donation.requesterEmail}</small>
+                                                        <small>{user.displayName}</small><br />
+                                                        <small>{user.email}</small>
                                                     </div>
                                                 </>
                                                 :
@@ -77,7 +80,9 @@ const AllBloodDonationRequest = () => {
                                         admin ?
                                             <td>
                                                 <div className="flex flex-col gap-2">
-                                                    <button className="btn btn-xs btn-info text-white">View</button>
+                                                    <button className="btn btn-xs btn-info text-white">
+                                                        <Link to={`/blood-donation-request/${donation._id}`}>View</Link>
+                                                    </button>
                                                     <button className="btn btn-xs btn-accent text-white">Edit</button>
                                                     <button className="btn btn-xs btn-error text-white">Delete</button>
                                                 </div>

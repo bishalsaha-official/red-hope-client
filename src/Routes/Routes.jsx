@@ -14,6 +14,7 @@ import AllBloodDonationRequest from "../Pages/Dashboard/AllBloodDonationRequest/
 import ContentManagement from "../Pages/Dashboard/ContentManagement/ContentManagement";
 import AddBlog from "../Pages/Dashboard/AddBlog/AddBlog";
 import BloodDonationRequest from "../Pages/BloodDonationRequest/BloodDonationRequest";
+import BloodDonationDetails from "../Pages/BloodDonationRequest/BloodDonationDetails";
 
 export const router = createBrowserRouter([
     {
@@ -27,6 +28,11 @@ export const router = createBrowserRouter([
             {
                 path: '/blood-donation-request',
                 element: <BloodDonationRequest></BloodDonationRequest>
+            },
+            {
+                path: '/blood-donation-request/:id',
+                element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
+                loader: ({ params }) => fetch(`http://localhost:5000/donation-request/${params.id}`)
             },
             {
                 path: '/register',

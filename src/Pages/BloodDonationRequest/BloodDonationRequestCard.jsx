@@ -37,7 +37,7 @@ const BloodDonationRequestCard = ({ donation }) => {
 
             {/* View Button */}
             <div className="card-actions justify-end mt-4">
-                <Link to={`/donation/${_id}`} >
+                <Link to={`/blood-donation-request/${_id}`} >
                     <button className="btn bg-[#EF3D32] text-white btn-sm">View Details</button>
                 </Link>
             </div>

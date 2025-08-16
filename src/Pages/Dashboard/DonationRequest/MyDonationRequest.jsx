@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useDonationRequest from "../../../Hooks/useDonationRequest";
 
 const MyDonationRequest = () => {
@@ -62,7 +63,9 @@ const MyDonationRequest = () => {
                                     </td>
                                     <td>
                                         <div className="flex flex-col gap-2">
-                                            <button className="btn btn-xs btn-info text-white">View</button>
+                                            <button className="btn btn-xs btn-info text-white">
+                                                <Link to={`/blood-donation-request/${donation._id}`}>View</Link>
+                                            </button>
                                             <button className="btn btn-xs btn-accent text-white">Edit</button>
                                             <button className="btn btn-xs btn-error text-white">Delete</button>
                                         </div>
