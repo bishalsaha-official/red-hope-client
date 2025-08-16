@@ -77,8 +77,8 @@ const MyDonationRequest = () => {
                                             donation.status === "inprogress" ?
                                                 <>
                                                     <div className="flex gap-2 flex-col">
-                                                        <button className="btn btn-xs btn-success text-white">Done</button>
-                                                        <button className="btn btn-xs btn-warning text-white">Cancel</button>
+                                                        <button className="btn btn-sm btn-success text-white">Done</button>
+                                                        <button className="btn btn-sm btn-warning text-white">Cancel</button>
                                                     </div>
                                                     <div>
                                                         <small>{donation.requesterName}</small><br />

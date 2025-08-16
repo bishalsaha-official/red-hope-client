@@ -17,6 +17,38 @@ const AllBloodDonationRequest = () => {
         }
     })
 
+    // Update Donation Status inprogress to done
+    const handleStatusDone = async (id) => {
+        const updateStatus = { status: 'done' }
+        const res = await axiosSecure.patch(`/donation-request/${id}`, updateStatus)
+        if (res.data.modifiedCount > 0) {
+            refetch()
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Donation status has been done",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+
+    // Update Donation Status inprogress to cancel
+    const handleStatusCancel = async (id) => {
+        const updateStatus = { status: 'cancel' }
+        const res = await axiosSecure.patch(`/donation-request/${id}`, updateStatus)
+        if (res.data.modifiedCount > 0) {
+            refetch()
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Donation status has been Canceled",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+
     // Delete Request 
     const handleDeleteRequest = (id) => {
         console.log(id)
@@ -92,8 +124,8 @@ const AllBloodDonationRequest = () => {
                                             donation.status === "inprogress" ?
                                                 <>
                                                     <div className="flex gap-2 flex-col">
-                                                        <button className="btn btn-xs btn-success text-white">Done</button>
-                                                        <button className="btn btn-xs btn-warning text-white">Cancel</button>
+                                                        <button onClick={() => handleStatusDone(donation._id)} className="btn btn-xs btn-success text-white">Done</button>
+                                                        <button onClick={() => handleStatusCancel(donation._id)} className="btn btn-xs btn-warning text-white">Cancel</button>
                                                     </div>
                                                     <div>
                                                         <small>{user.displayName}</small><br />
@@ -111,7 +143,7 @@ const AllBloodDonationRequest = () => {
                                                     <button className="btn btn-xs btn-info text-white">
                                                         <Link to={`/blood-donation-request/${donation._id}`}>View</Link>
                                                     </button>
-                                                    <button onClick={()=> handleDeleteRequest(donation._id)} className="btn btn-xs btn-error text-white">Delete</button>
+                                                    <button onClick={() => handleDeleteRequest(donation._id)} className="btn btn-xs btn-error text-white">Delete</button>
                                                 </div>
                                             </td> : ''
                                     }
