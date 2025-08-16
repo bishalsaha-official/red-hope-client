@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
+import { useState } from "react";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure()
@@ -14,6 +15,9 @@ const AllUsers = () => {
             return res.data
         }
     })
+
+    const [filterStatus, setFilterStatus] = useState("");
+    const filteredUsers = filterStatus ? users.filter((user) => user.status === filterStatus) : users;
 
     // Make Admin User
     const handleMakeAdmin = (id) => {
@@ -155,10 +159,10 @@ const AllUsers = () => {
             </div>
             <div className="my-5 mx-5">
                 <h2 className="text-xl font-bold mb-2">Status:</h2>
-                <select defaultValue="" className="select select-secondary w-full" >
+                <select defaultValue="" className="select select-secondary w-full" onChange={(e) => setFilterStatus(e.target.value)}>
                     <option value="" disabled>Status</option>
                     <option value="active">active</option>
-                    <option value="blocked">blocked</option>
+                    <option value="block">block</option>
                 </select>
             </div>
             <div className="overflow-x-auto">
@@ -177,7 +181,7 @@ const AllUsers = () => {
                     </thead>
                     <tbody className="text-center">
                         {
-                            users.map((user, index) => <tr key={user._id} >
+                            filteredUsers.map((user, index) => <tr key={user._id} >
                                 <td>{index + 1}</td>
                                 <td>
                                     <div className="avatar">
