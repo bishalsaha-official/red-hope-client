@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure()
@@ -12,7 +13,30 @@ const AllUsers = () => {
         }
     })
 
-    console.log(users)
+    const handleDeleteUser = (id) => {
+        console.log(id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Are you sure you want to delete this user",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/user/${id}`)
+                if (res.data.deletedCount > 0) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "User has been delete",
+                        icon: "success"
+                    });
+                    refetch()
+                }
+            }
+        });
+    }
 
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
@@ -61,7 +85,7 @@ const AllUsers = () => {
                                         <button className="btn btn-xs btn-primary text-white">Volunteer</button>
                                         <button className="btn btn-xs btn-success text-white">Admin</button>
                                         <button className="btn btn-xs btn-warning text-white">Block</button>
-                                        <button className="btn btn-xs btn-error text-white">Delete</button>
+                                        <button onClick={() => handleDeleteUser(user._id)} className="btn btn-xs btn-error text-white">Delete</button>
                                     </div>
                                 </td>
                             </tr>)
