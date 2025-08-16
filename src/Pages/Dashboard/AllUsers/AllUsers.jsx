@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure()
+    const { deleteUserAccount } = useAuth()
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
@@ -13,6 +15,63 @@ const AllUsers = () => {
         }
     })
 
+    // Make Admin User
+    const handleMakeAdmin = (id) => {
+        console.log(id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You Want to Make Admin this user From Donor ",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Update it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const updateRole = { role: 'admin' }
+                const res = await axiosSecure.patch(`/users/admin/${id}`, updateRole)
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        title: "Updated",
+                        text: "This Donor is now On Admin",
+                        icon: "success"
+                    });
+                }
+
+            }
+        });
+    }
+
+    // Make Volunteer User
+    const handleMakeVolunteer = (id) => {
+        console.log(id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You Want to Make Volunteer this user From Donor ",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Update it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const updateRole = { role: 'volunteer' }
+                const res = await axiosSecure.patch(`/users/volunteer/${id}`, updateRole)
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        title: "Updated",
+                        text: "This Donor is now On Volunteer",
+                        icon: "success"
+                    });
+                }
+
+            }
+        });
+    }
+
+    // Delete The User
     const handleDeleteUser = (id) => {
         console.log(id)
         Swal.fire({
@@ -25,15 +84,18 @@ const AllUsers = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axiosSecure.delete(`/user/${id}`)
-                if (res.data.deletedCount > 0) {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "User has been delete",
-                        icon: "success"
-                    });
-                    refetch()
-                }
+                await deleteUserAccount()
+                    .then(async () => {
+                        const res = await axiosSecure.delete(`/user/${id}`)
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "User has been delete",
+                                icon: "success"
+                            });
+                            refetch()
+                        }
+                    })
             }
         });
     }
@@ -45,7 +107,7 @@ const AllUsers = () => {
             </div>
             <div className="my-5 mx-5">
                 <h2 className="text-xl font-bold mb-2">Status:</h2>
-                <select defaultValue="" className="select select-secondary w-full">
+                <select defaultValue="" className="select select-secondary w-full" >
                     <option value="" disabled>Status</option>
                     <option value="active">active</option>
                     <option value="blocked">blocked</option>
@@ -82,8 +144,8 @@ const AllUsers = () => {
                                 <td className="capitalize">{user.status}</td>
                                 <td>
                                     <div className="flex flex-col gap-1">
-                                        <button className="btn btn-xs btn-primary text-white">Volunteer</button>
-                                        <button className="btn btn-xs btn-success text-white">Admin</button>
+                                        <button onClick={() => handleMakeVolunteer(user._id)} className="btn btn-xs btn-primary text-white">Volunteer</button>
+                                        <button onClick={() => handleMakeAdmin(user._id)} className="btn btn-xs btn-success text-white">Admin</button>
                                         <button className="btn btn-xs btn-warning text-white">Block</button>
                                         <button onClick={() => handleDeleteUser(user._id)} className="btn btn-xs btn-error text-white">Delete</button>
                                     </div>

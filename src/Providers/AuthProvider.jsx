@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { app } from "../Firebase/firebase.config";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 
@@ -37,6 +37,12 @@ const AuthProvider = ({ children }) => {
         })
     }
 
+    // Delete User
+    const deleteUserAccount = () => {
+        setLoading(true)
+        return deleteUser(user)
+    }
+
     // Observer
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -47,7 +53,7 @@ const AuthProvider = ({ children }) => {
                 axiosPublic.post('/jwt', userInfo)
                     .then(res => {
                         console.log(res.data)
-                        if(res.data.token){
+                        if (res.data.token) {
                             localStorage.setItem('access-token', res.data.token)
                         }
                     })
@@ -68,7 +74,8 @@ const AuthProvider = ({ children }) => {
         createUser,
         loginUser,
         logoutUser,
-        updateUserProfile
+        updateUserProfile,
+        deleteUserAccount
     }
 
     return (
