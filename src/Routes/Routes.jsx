@@ -15,6 +15,7 @@ import ContentManagement from "../Pages/Dashboard/ContentManagement/ContentManag
 import AddBlog from "../Pages/Dashboard/AddBlog/AddBlog";
 import BloodDonationRequest from "../Pages/BloodDonationRequest/BloodDonationRequest";
 import BloodDonationDetails from "../Pages/BloodDonationRequest/BloodDonationDetails";
+import SearchPage from "../Pages/SearchPage/SearchPage";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home></Home>
+            },
+            {
+                path: '/search-page',
+                element: <SearchPage></SearchPage>
             },
             {
                 path: '/blood-donation-request',

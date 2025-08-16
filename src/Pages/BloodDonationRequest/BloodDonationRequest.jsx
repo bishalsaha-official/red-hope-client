@@ -7,7 +7,7 @@ const BloodDonationRequest = () => {
     const { data: donationsRequest = [] } = useQuery({
         queryKey: ['donation-request'],
         queryFn: async () => {
-            const res = await axiosPublic.get('http://localhost:5000/donation-request?status=pending')
+            const res = await axiosPublic.get('/donation-request?status=pending')
             return res.data;
         }
     })

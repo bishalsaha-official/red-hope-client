@@ -3,7 +3,7 @@ import { FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
-    const isAdmin = false;
+    const isAdmin = true;
     const volunteer = true;
 
     return (

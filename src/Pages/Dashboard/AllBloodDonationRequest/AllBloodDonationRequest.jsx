@@ -73,7 +73,7 @@ const AllBloodDonationRequest = () => {
                                                     </div>
                                                 </>
                                                 :
-                                                <button className="btn btn-success btn-sm text-white">{donation.status}...</button>
+                                                <button className="btn btn-success btn-sm text-white">{donation.status}</button>
                                         }
                                     </td>
                                     {
