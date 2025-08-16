@@ -12,7 +12,7 @@ const AdminDashboard = () => {
     const { data: stats = {} } = useQuery({
         queryKey: ['stats'],
         queryFn: async () => {
-            const res = await axiosSecure.get('http://localhost:5000/admin-stats')
+            const res = await axiosSecure.get('/admin-stats')
             return res.data
         }
     })

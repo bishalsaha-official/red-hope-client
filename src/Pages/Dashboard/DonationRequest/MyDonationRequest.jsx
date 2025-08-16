@@ -1,8 +1,36 @@
 import { Link } from "react-router-dom";
 import useDonationRequest from "../../../Hooks/useDonationRequest";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const MyDonationRequest = () => {
-    const [donationRequest] = useDonationRequest()
+    const [donationRequest, refetch] = useDonationRequest()
+    const axiosSecure = useAxiosSecure()
+    // Delete Request 
+    const handleDeleteRequest = (id) => {
+        console.log(id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Are you sure you want to delete this Request",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/donation-request/all/${id}`)
+                if (res.data.deletedCount > 0) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Donation request has been delete now",
+                        icon: "success"
+                    });
+                    refetch()
+                }
+            }
+        });
+    }
 
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
@@ -66,8 +94,7 @@ const MyDonationRequest = () => {
                                             <button className="btn btn-xs btn-info text-white">
                                                 <Link to={`/blood-donation-request/${donation._id}`}>View</Link>
                                             </button>
-                                            <button className="btn btn-xs btn-accent text-white">Edit</button>
-                                            <button className="btn btn-xs btn-error text-white">Delete</button>
+                                            <button onClick={() => handleDeleteRequest(donation._id)} className="btn btn-xs btn-error text-white">Delete</button>
                                         </div>
                                     </td>
                                 </tr>)

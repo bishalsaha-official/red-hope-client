@@ -2,18 +2,46 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AllBloodDonationRequest = () => {
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
 
-    const { data: donationRequest = [] } = useQuery({
+    // Load donation request data
+    const { data: donationRequest = [], refetch } = useQuery({
         queryKey: ['donationRequest'],
         queryFn: async () => {
-            const res = await axiosSecure.get('http://localhost:5000/donation-request/all')
+            const res = await axiosSecure.get('/donation-request/all')
             return res.data;
         }
     })
+
+    // Delete Request 
+    const handleDeleteRequest = (id) => {
+        console.log(id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Are you sure you want to delete this Request",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/donation-request/all/${id}`)
+                if (res.data.deletedCount > 0) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Donation request has been delete now",
+                        icon: "success"
+                    });
+                    refetch()
+                }
+            }
+        });
+    }
 
     const admin = true;
 
@@ -83,8 +111,7 @@ const AllBloodDonationRequest = () => {
                                                     <button className="btn btn-xs btn-info text-white">
                                                         <Link to={`/blood-donation-request/${donation._id}`}>View</Link>
                                                     </button>
-                                                    <button className="btn btn-xs btn-accent text-white">Edit</button>
-                                                    <button className="btn btn-xs btn-error text-white">Delete</button>
+                                                    <button onClick={()=> handleDeleteRequest(donation._id)} className="btn btn-xs btn-error text-white">Delete</button>
                                                 </div>
                                             </td> : ''
                                     }

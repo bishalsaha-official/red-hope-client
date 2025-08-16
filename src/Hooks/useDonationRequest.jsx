@@ -6,14 +6,14 @@ const useDonationRequest = () => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
-    const { data: donationRequest = [] } = useQuery({
+    const { data: donationRequest = [], refetch } = useQuery({
         queryKey: ['donation', user.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`http://localhost:5000/donation-request?email=${user.email}`)
+            const res = await axiosSecure.get(`/donation-request?email=${user.email}`)
             return res.data
         }
     })
-    return [donationRequest]
+    return [donationRequest, refetch]
 };
 
 export default useDonationRequest;
