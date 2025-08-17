@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useDonationRequest from "../../../Hooks/useDonationRequest";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useState } from "react";
 
 const MyDonationRequest = () => {
     const [donationRequest, refetch] = useDonationRequest()
@@ -65,6 +66,10 @@ const MyDonationRequest = () => {
         });
     }
 
+    // Filter donation status
+    const [filterStatus, setFilterStatus] = useState("")
+    const filterDonationRequest = filterStatus ? donationRequest.filter(donation => donation.status === filterStatus) : donationRequest;
+
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
             <div className="text-center p-5 mb-6 bg-[#E57373] rounded-t-3xl" >
@@ -72,12 +77,12 @@ const MyDonationRequest = () => {
             </div>
             <div className="my-5 mx-5">
                 <h2 className="text-xl font-bold mb-2">Status:</h2>
-                <select defaultValue="" className="select select-secondary w-full">
+                <select defaultValue="" className="select select-secondary w-full" onChange={(e) => setFilterStatus(e.target.value)}>
                     <option value="" disabled>Status</option>
                     <option value="pending">pending</option>
                     <option value="inprogress">inprogress</option>
                     <option value="done">done</option>
-                    <option value="canceled">canceled</option>
+                    <option value="cancel">cancel</option>
                 </select>
             </div>
             <div>
@@ -98,7 +103,7 @@ const MyDonationRequest = () => {
                         </thead>
                         <tbody className="font-semibold capitalize">
                             {
-                                donationRequest.map((donation, index) => <tr key={index}>
+                                filterDonationRequest.map((donation, index) => <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{donation.recipientName}</td>
                                     <td>{donation.district},<br /> {donation.upazila}</td>

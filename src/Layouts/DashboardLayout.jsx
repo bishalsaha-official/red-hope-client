@@ -49,7 +49,7 @@ const DashboardLayout = () => {
                     </ul>
                 </aside>
                 {/* Main Content */}
-                <main className="bg-[#FFF2F2] w-full mx-auto">
+                <main className="bg-white w-full mx-auto">
                     <Outlet></Outlet>
                 </main>
             </div>
