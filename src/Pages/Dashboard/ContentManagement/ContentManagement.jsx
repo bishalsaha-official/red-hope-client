@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const ContentManagement = () => {
     const axiosPublic = useAxiosPublic()
+    const [filterBlogs, setFilterBlogs] = useState("")
 
     const { data: blogs = [], refetch } = useQuery({
         queryKey: ['blogs'],
@@ -13,6 +15,37 @@ const ContentManagement = () => {
             return res.data;
         }
     })
+
+    // Update Blog status
+    const handleStatusPublish = async (id) => {
+        const updateStatus = { status: 'published' }
+        const res = await axiosPublic.patch(`/blogs/${id}`, updateStatus)
+        if (res.data.modifiedCount > 0) {
+            refetch()
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Blog has been published now",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+
+    const handleStatusUnPublish = async (id) => {
+        const updateStatus = { status: 'draft' }
+        const res = await axiosPublic.patch(`/blogs/${id}`, updateStatus)
+        if (res.data.modifiedCount > 0) {
+            refetch()
+            Swal.fire({
+                position: "top-center",
+                icon: "success",
+                title: "Blog has been draft now",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
 
     // Delete Blog
     const handleDeleteBlog = (id) => {
@@ -39,6 +72,9 @@ const ContentManagement = () => {
         });
     }
 
+    // Filter by (published or draft)
+    const filterBlogsdata = filterBlogs ? blogs.filter(blog => blog.status === filterBlogs) : blogs
+
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
             <div className="text-center p-5 mb-6 bg-[#E57373] rounded-t-3xl" >
@@ -51,7 +87,7 @@ const ContentManagement = () => {
                         <button className="btn btn-info text-white">Add Blog</button>
                     </Link>
                 </div>
-                <select defaultValue="" className="select select-secondary w-full">
+                <select defaultValue="" onChange={(e) => setFilterBlogs(e.target.value)} className="select select-secondary w-full">
                     <option value="" disabled>Status</option>
                     <option value="draft">draft</option>
                     <option value="published">published</option>
@@ -72,7 +108,7 @@ const ContentManagement = () => {
                         </thead>
                         <tbody className="capitalize">
                             {
-                                blogs.map((blog, index) => <tr key={index}>
+                                filterBlogsdata.map((blog, index) => <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>
                                         <div className="avatar">
@@ -85,7 +121,12 @@ const ContentManagement = () => {
                                     <td>{blog.status}</td>
                                     <td>
                                         <div className="flex items-center gap-1">
-                                            <button className="btn btn-sm btn-success text-white">Publish</button>
+                                            {
+                                                blog.status === 'published' ?
+                                                    <button onClick={() => handleStatusUnPublish(blog._id)} className="btn btn-sm btn-accent text-white">UnPublish</button>
+                                                    :
+                                                    <button onClick={() => handleStatusPublish(blog._id)} className="btn btn-sm btn-success text-white">Publish</button>
+                                            }
                                             <button onClick={() => handleDeleteBlog(blog._id)} className="btn btn-sm btn-warning text-white">Delete</button>
                                         </div>
                                     </td>
