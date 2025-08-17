@@ -16,6 +16,8 @@ import AddBlog from "../Pages/Dashboard/AddBlog/AddBlog";
 import BloodDonationRequest from "../Pages/BloodDonationRequest/BloodDonationRequest";
 import BloodDonationDetails from "../Pages/BloodDonationRequest/BloodDonationDetails";
 import SearchPage from "../Pages/SearchPage/SearchPage";
+import Blogs from "../Pages/Blogs/Blogs";
+import BlogsDetails from "../Pages/Blogs/BlogsDetails";
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +40,15 @@ export const router = createBrowserRouter([
                 path: '/blood-donation-request/:id',
                 element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
                 loader: ({ params }) => fetch(`http://localhost:5000/donation-request/${params.id}`)
+            },
+            {
+                path: '/blogs',
+                element: <Blogs></Blogs>
+            },
+            {
+                path: '/blogs/:id',
+                element: <BlogsDetails></BlogsDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/blogs/${params.id}`)
             },
             {
                 path: '/register',
