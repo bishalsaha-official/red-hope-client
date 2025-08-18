@@ -3,6 +3,7 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const ContentManagement = () => {
     const axiosPublic = useAxiosPublic()
@@ -75,6 +76,8 @@ const ContentManagement = () => {
     // Filter by (published or draft)
     const filterBlogsdata = filterBlogs ? blogs.filter(blog => blog.status === filterBlogs) : blogs
 
+    const [isAdmin] = useAdmin();
+
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
             <div className="text-center p-5 mb-6 bg-[#E57373] rounded-t-3xl" >
@@ -123,11 +126,11 @@ const ContentManagement = () => {
                                         <div className="flex items-center gap-1">
                                             {
                                                 blog.status === 'published' ?
-                                                    <button onClick={() => handleStatusUnPublish(blog._id)} className="btn btn-sm btn-accent text-white">UnPublish</button>
+                                                    <button disabled={!isAdmin} onClick={() => handleStatusUnPublish(blog._id)} className="btn btn-sm btn-accent text-white">UnPublish</button>
                                                     :
-                                                    <button onClick={() => handleStatusPublish(blog._id)} className="btn btn-sm btn-success text-white">Publish</button>
+                                                    <button disabled={!isAdmin} onClick={() => handleStatusPublish(blog._id)} className="btn btn-sm btn-success text-white">Publish</button>
                                             }
-                                            <button onClick={() => handleDeleteBlog(blog._id)} className="btn btn-sm btn-warning text-white">Delete</button>
+                                            <button disabled={!isAdmin} onClick={() => handleDeleteBlog(blog._id)} className="btn btn-sm btn-warning text-white">Delete</button>
                                         </div>
                                     </td>
                                 </tr>)

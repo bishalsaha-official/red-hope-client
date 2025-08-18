@@ -1,0 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "./useAuth";
+import useAxiosSecure from "./useAxiosSecure";
+
+const useVolunteer = () => {
+    const { user } = useAuth()
+    const axiosSecure = useAxiosSecure()
+
+    const { data: isVolunteer } = useQuery({
+        queryKey: [user?.email, 'isVolunteer'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/volunteer/${user.email}`)
+            return res.data.volunteer
+        }
+    })
+
+    return [isVolunteer]
+};
+
+export default useVolunteer;

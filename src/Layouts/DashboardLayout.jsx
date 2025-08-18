@@ -1,10 +1,13 @@
 import { CgProfile } from "react-icons/cg";
 import { FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
+import useVolunteer from "../Hooks/useVolunteer";
 
 const DashboardLayout = () => {
-    const isAdmin = true;
-    const volunteer = true;
+    const [isAdmin] = useAdmin();
+    const [isVolunteer] = useVolunteer();
+    console.log(isVolunteer)
 
     return (
         <>
@@ -25,7 +28,7 @@ const DashboardLayout = () => {
                                 <li><NavLink to='/dashboard/content-management'> <CgProfile className="text-xl"></CgProfile>Content Management </NavLink></li>
                             </ul>
                             :
-                            volunteer ?
+                            isVolunteer ?
                                 <ul className="menu uppercase w-full font-semibold">
                                     <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
                                     <li><NavLink to='/dashboard/all-donation-requests'> <CgProfile className="text-xl"></CgProfile>All Donation Request </NavLink></li>
@@ -46,6 +49,8 @@ const DashboardLayout = () => {
                     {/* Shared */}
                     <ul className="menu uppercase font-semibold">
                         <li><NavLink to="/"> <FaHome className="text-xl"></FaHome> Home</NavLink> </li>
+                        <li><NavLink to="/blood-donation-request"> <FaHome className="text-xl"></FaHome> Blood Donation Request</NavLink> </li>
+                        <li><NavLink to="/search-page"> <FaHome className="text-xl"></FaHome> Search Donor</NavLink> </li>
                     </ul>
                 </aside>
                 {/* Main Content */}

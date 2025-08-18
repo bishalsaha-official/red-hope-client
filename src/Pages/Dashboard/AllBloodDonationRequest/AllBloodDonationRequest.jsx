@@ -4,6 +4,7 @@ import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const AllBloodDonationRequest = () => {
     const axiosSecure = useAxiosSecure()
@@ -80,7 +81,7 @@ const AllBloodDonationRequest = () => {
     const [filterStatus, setFilterStatus] = useState("")
     const filterDonationRequest = filterStatus ? donationRequest.filter(donation => donation.status === filterStatus) : donationRequest;
 
-    const admin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">
@@ -110,9 +111,7 @@ const AllBloodDonationRequest = () => {
                                 <th>Hospital Name</th>
                                 <th>Blood Group</th>
                                 <th>Donation Status</th>
-                                {
-                                    admin ? <th>Action</th> : ''
-                                }
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody className="font-semibold capitalize">
@@ -141,17 +140,14 @@ const AllBloodDonationRequest = () => {
                                                 <button className="btn btn-success btn-sm text-white">{donation.status}</button>
                                         }
                                     </td>
-                                    {
-                                        admin ?
-                                            <td>
-                                                <div className="flex flex-col gap-2">
-                                                    <button className="btn btn-xs btn-info text-white">
-                                                        <Link to={`/blood-donation-request/${donation._id}`}>View</Link>
-                                                    </button>
-                                                    <button onClick={() => handleDeleteRequest(donation._id)} className="btn btn-xs btn-error text-white">Delete</button>
-                                                </div>
-                                            </td> : ''
-                                    }
+                                    <td>
+                                        <div className="flex flex-col gap-2">
+                                            <button className="btn btn-xs btn-info text-white">
+                                                <Link to={`/blood-donation-request/${donation._id}`}>View</Link>
+                                            </button>
+                                            <button disabled={!isAdmin} onClick={() => handleDeleteRequest(donation._id)} className="btn btn-xs btn-error text-white">Delete</button>
+                                        </div>
+                                    </td>
                                 </tr>)
                             }
                         </tbody>
