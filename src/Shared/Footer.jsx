@@ -1,3 +1,8 @@
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+import { Link } from "react-router-dom";
+
 const Footer = () => {
     return (
         <footer className="bg-[#1A1A1A] text-gray-300 py-10">
@@ -15,11 +20,11 @@ const Footer = () => {
                 <div>
                     <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="/" className="hover:text-[#EF3D32]">Home</a></li>
-                        <li><a href="/about" className="hover:text-[#EF3D32]">About</a></li>
-                        <li><a href="/donors" className="hover:text-[#EF3D32]">Find Donors</a></li>
-                        <li><a href="/request" className="hover:text-[#EF3D32]">Request Blood</a></li>
-                        <li><a href="/contact" className="hover:text-[#EF3D32]">Contact</a></li>
+                        <li><Link to="/" className="hover:text-[#EF3D32]">Home</Link></li>
+                        <li><Link to="/" className="hover:text-[#EF3D32]">About</Link></li>
+                        <li><Link to="/search-page" className="hover:text-[#EF3D32]">Find Donors</Link></li>
+                        <li><Link to="/dashboard/my-donation-requests" className="hover:text-[#EF3D32]">Request Blood</Link></li>
+                        <li><Link to="/" className="hover:text-[#EF3D32]">Contact</Link></li>
                     </ul>
                 </div>
 
@@ -27,10 +32,10 @@ const Footer = () => {
                 <div>
                     <h3 className="text-lg font-semibold text-white mb-3">Resources</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="/faq" className="hover:text-[#EF3D32]">FAQ</a></li>
-                        <li><a href="/privacy" className="hover:text-[#EF3D32]">Privacy Policy</a></li>
-                        <li><a href="/terms" className="hover:text-[#EF3D32]">Terms & Conditions</a></li>
-                        <li><a href="/blog" className="hover:text-[#EF3D32]">Blog</a></li>
+                        <li><Link to="/" className="hover:text-[#EF3D32]">FAQ</Link></li>
+                        <li><Link to="/" className="hover:text-[#EF3D32]">Privacy Policy</Link></li>
+                        <li><Link to="/" className="hover:text-[#EF3D32]">Terms & Conditions</Link></li>
+                        <li><Link to="/blogs" className="hover:text-[#EF3D32]">Blog</Link></li>
                     </ul>
                 </div>
 
@@ -38,9 +43,9 @@ const Footer = () => {
                 <div>
                     <h3 className="text-lg font-semibold text-white mb-3">Contact</h3>
                     <ul className="text-sm space-y-2">
-                        <li>📍 123 RedHope Street, Dhaka, BD</li>
-                        <li>📞 +880 1234 567 890</li>
-                        <li>✉️ support@redhope.org</li>
+                        <li><FaLocationDot className="inline-block"></FaLocationDot> 123 Blood Bank Road, Khulna, Bangladesh</li>
+                        <li><FaPhoneAlt className="inline-block"></FaPhoneAlt> +880 1234 567890</li>
+                        <li><MdEmail className="inline-block"></MdEmail> support@redhope.org</li>
                     </ul>
                 </div>
             </div>

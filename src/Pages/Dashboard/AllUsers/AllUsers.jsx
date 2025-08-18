@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import useAuth from "../../../Hooks/useAuth";
 import { useState } from "react";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure()
-    const { deleteUserAccount } = useAuth()
+    // const { deleteUserAccount } = useAuth()
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
@@ -123,12 +122,11 @@ const AllUsers = () => {
         });
     }
 
-    // Delete The User
+    // Make Delete User
     const handleDeleteUser = (id) => {
-        console.log(id)
         Swal.fire({
             title: "Are you sure?",
-            text: "Are you sure you want to delete this user",
+            text: "Are you sure you want to delete this user?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -136,21 +134,45 @@ const AllUsers = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await deleteUserAccount()
-                    .then(async () => {
-                        const res = await axiosSecure.delete(`/user/${id}`)
-                        if (res.data.deletedCount > 0) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "User has been delete",
-                                icon: "success"
-                            });
-                            refetch()
-                        }
-                    })
+                const res = await axiosSecure.delete(`/users/${id}`);
+                if (res.data.deletedCount > 0) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "User has been deleted.",
+                        icon: "success"
+                    });
+                    refetch();
+                }
             }
         });
-    }
+    };
+
+    // const handleDeleteUser = (id) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "Are you sure you want to delete this user",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!"
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             await deleteUserAccount()
+    //                 .then(async () => {
+    //                     const res = await axiosSecure.delete(`/user/${id}`)
+    //                     if (res.data.deletedCount > 0) {
+    //                         Swal.fire({
+    //                             title: "Deleted!",
+    //                             text: "User has been delete",
+    //                             icon: "success"
+    //                         });
+    //                         refetch()
+    //                     }
+    //                 })
+    //         }
+    //     });
+    // }
 
     return (
         <div className="max-w-10/12 mx-auto mt-5 rounded-2xl shadow-sm">

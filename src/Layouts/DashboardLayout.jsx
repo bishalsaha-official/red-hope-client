@@ -7,7 +7,8 @@ import useVolunteer from "../Hooks/useVolunteer";
 const DashboardLayout = () => {
     const [isAdmin] = useAdmin();
     const [isVolunteer] = useVolunteer();
-    console.log(isVolunteer)
+
+    console.log(isAdmin, isVolunteer)
 
     return (
         <>

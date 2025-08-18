@@ -53,7 +53,6 @@ const AllBloodDonationRequest = () => {
 
     // Delete Request 
     const handleDeleteRequest = (id) => {
-        console.log(id)
         Swal.fire({
             title: "Are you sure?",
             text: "Are you sure you want to delete this Request",

@@ -9,7 +9,7 @@ const useVolunteer = () => {
     const { data: isVolunteer } = useQuery({
         queryKey: [user?.email, 'isVolunteer'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/users/volunteer/${user.email}`)
+            const res = await axiosSecure.get(`/users/check-volunteer/${user.email}`)
             return res.data.volunteer
         }
     })

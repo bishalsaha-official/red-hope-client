@@ -6,9 +6,9 @@ import Spinner from "../Shared/Spinner";
 const AdminRoutes = ({ children }) => {
     const location = useLocation()
     const { user, loading } = useAuth()
-    const [isAdmin, adminLoading] = useAdmin()
+    const [isAdmin] = useAdmin()
 
-    if (loading || adminLoading) {
+    if (loading) {
         return <Spinner></Spinner>
     }
 

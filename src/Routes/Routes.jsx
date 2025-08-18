@@ -86,7 +86,7 @@ export const router = createBrowserRouter([
             // Admin Routes
             {
                 path: '/dashboard/allUsers',
-                element: <AdminRoutes><AllUsers></AllUsers></AdminRoutes>
+                element: <AllUsers></AllUsers>
             },
             {
                 path: '/dashboard/all-donation-requests',
