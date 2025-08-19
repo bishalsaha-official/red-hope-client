@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import logo from '../assets/logo/icon.png'
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import './navbar.css'
 
 const Navbar = () => {
     const { user, logoutUser } = useAuth()

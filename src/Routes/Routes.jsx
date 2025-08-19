@@ -18,7 +18,6 @@ import BloodDonationDetails from "../Pages/BloodDonationRequest/BloodDonationDet
 import SearchPage from "../Pages/SearchPage/SearchPage";
 import Blogs from "../Pages/Blogs/Blogs";
 import BlogsDetails from "../Pages/Blogs/BlogsDetails";
-import AdminRoutes from "./AdminRoutes";
 
 export const router = createBrowserRouter([
     {
@@ -40,7 +39,7 @@ export const router = createBrowserRouter([
             {
                 path: '/blood-donation-request/:id',
                 element: <PrivateRoutes><BloodDonationDetails></BloodDonationDetails></PrivateRoutes>,
-                loader: ({ params }) => fetch(`http://localhost:5000/donation-request/${params.id}`)
+                loader: ({ params }) => fetch(`https://red-hope-server.vercel.app/donation-request/${params.id}`)
             },
             {
                 path: '/blogs',
@@ -49,7 +48,7 @@ export const router = createBrowserRouter([
             {
                 path: '/blogs/:id',
                 element: <BlogsDetails></BlogsDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5000/blogs/${params.id}`)
+                loader: ({ params }) => fetch(`https://red-hope-server.vercel.app/blogs/${params.id}`)
             },
             {
                 path: '/register',

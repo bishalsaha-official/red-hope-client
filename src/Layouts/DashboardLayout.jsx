@@ -4,21 +4,28 @@ import { NavLink, Outlet } from "react-router-dom";
 import { BiDonateHeart, BiSolidDonateBlood } from "react-icons/bi";
 import { IoCreateOutline } from "react-icons/io5";
 import { MdAddToDrive, MdAddLocationAlt } from "react-icons/md";
+import { GiHamburgerMenu } from "react-icons/gi";
 import useAdmin from "../Hooks/useAdmin";
 import useVolunteer from "../Hooks/useVolunteer";
+import './dashboard.css'
+import { useState } from "react";
 
 const DashboardLayout = () => {
     const [isAdmin] = useAdmin();
     const [isVolunteer] = useVolunteer();
-
-    console.log(isAdmin, isVolunteer)
+    const [isOpen, setIsOpen] = useState(false)
 
     return (
         <>
-            <div className="flex min-h-screen w-full">
+            <div id="dashboard" className="flex min-h-screen w-full">
+                <div className="md:hidden flex items-center justify-between bg-[#E57373] text-white px-4 py-3">
+                    <button onClick={() => setIsOpen(!isOpen)}>
+                        <GiHamburgerMenu className="text-2xl" />
+                    </button>
+                </div>
                 {/* Aside */}
-                <aside className="w-80 bg-[#E57373] text-white p-6">
-                    <div className="flex items-center gap-2.5 mb-10">
+                <aside className={`fixed md:static top-0 left-0 h-full md:h-auto w-64 bg-[#E57373] text-white p-6 z-50 transform ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 transition-transform duration-300 ease-in-out`}>
+                    <div className="hidden md:flex items-center gap-2.5 mb-10">
                         <h2 className="text-xl font-bold">RED HOPE</h2>
                     </div>
                     {
@@ -57,6 +64,12 @@ const DashboardLayout = () => {
                         <li><NavLink to="/search-page"> <FaSearch className="text-xl"></FaSearch > Search Donor</NavLink> </li>
                     </ul>
                 </aside>
+
+                {/* Overlay for Mobile */}
+                {isOpen && (
+                    <div className="fixed inset-0 bg-black/40 md:hidden" onClick={() => setIsOpen(false)} />
+                )}
+
                 {/* Main Content */}
                 <main className="bg-white w-full mx-auto">
                     <Outlet></Outlet>
