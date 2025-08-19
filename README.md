@@ -1,12 +1,14 @@
 # RED HOPE - A Blood Donation Application
 
+Check out the live Blood Donation Application: [Red Hope](https://red-hope.netlify.app/)
+
 A **user-friendly platform** built with the **MERN stack** (MongoDB, Express.js, React.js, Node.js) to facilitate **blood donation activities**. The application connects **donors** with those in need of blood, promoting a **seamless, efficient, and organized donation process**.
 
 It includes **role-based access**, **donation request management**, **content management**, and a **searchable public directory** of donors.
 
 ---
 
-## 🌟 Features
+## Features
 
 ### General Features
 - User-friendly interface with **responsive design** (Tailwind CSS & DaisyUI)
@@ -44,7 +46,7 @@ It includes **role-based access**, **donation request management**, **content ma
 
 ---
 
-## 🛠 Technology Stack
+## Technology Stack
 
 **Frontend**
 - React.js
@@ -53,7 +55,6 @@ It includes **role-based access**, **donation request management**, **content ma
 - React Hook Form (form handling)
 - React Icons
 - React Sweet Alert (alerts)
-- React Helmet
 - Typewriter.js (dynamic text)
 - TanStack Query (data fetching & caching)
 
