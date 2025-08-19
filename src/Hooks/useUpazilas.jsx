@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useQuery } from '@tanstack/react-query';
+import useAxiosPublic from './useAxiosPublic';
 
 const useUpazilas = () => {
-    const [upazilas, setUpazilas] = useState([])
-    useEffect(() => {
-        fetch('/public/upazilas.json')
-            .then(res => res.json())
-            .then(data => {
-                setUpazilas(data[2].data)
-            })
-    }, [])
+    const axiosPublic = useAxiosPublic()
+
+    const { data: upazilas = [] } = useQuery({
+        queryKey: ['upazilas'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/upazilas')
+            return res.data
+        }
+    })
     return [upazilas]
 };
 

@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "./useAxiosPublic";
 
 const useDistrict = () => {
-    const [districts, setDistricts] = useState([])
-    useEffect(() => {
-        fetch('/public/districts.json')
-            .then(res => res.json())
-            .then(data => {
-                setDistricts(data[2].data)
-            })
-    }, [])
+    const axiosPublic = useAxiosPublic()
+
+    const { data: districts = [] } = useQuery({
+        queryKey: ['districts'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/districts')
+            return res.data
+        }
+    })
     return [districts]
 };
 
