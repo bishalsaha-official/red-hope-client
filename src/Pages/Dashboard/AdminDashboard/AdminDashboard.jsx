@@ -19,7 +19,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="max-w-10/12 mx-auto mt-5 py-5 rounded-2xl shadow-sm">
-            <h2 className="text-2xl font-bold mb-5 p-5">Welcome Back, {user.displayName}</h2>
+            <h2 className="text-2xl font-bold mb-5 p-5 text-gray-800">Welcome Back, <span className="text-[#EF3D32]">{user.displayName}</span></h2>
             <div className="grid grid-cols-3 gap-5 px-5">
                 <div className="flex items-center gap-5 bg-gradient-to-r from-[#BB34F5] to-[#FCDBFF] p-10 text-white rounded-2xl">
                     <div>

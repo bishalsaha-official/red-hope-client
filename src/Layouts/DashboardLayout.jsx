@@ -1,6 +1,9 @@
 import { CgProfile } from "react-icons/cg";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaUsers, FaSearch } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import { BiDonateHeart, BiSolidDonateBlood } from "react-icons/bi";
+import { IoCreateOutline } from "react-icons/io5";
+import { MdAddToDrive, MdAddLocationAlt } from "react-icons/md";
 import useAdmin from "../Hooks/useAdmin";
 import useVolunteer from "../Hooks/useVolunteer";
 
@@ -22,26 +25,26 @@ const DashboardLayout = () => {
                         isAdmin ?
                             <ul className="menu uppercase w-full font-semibold">
                                 <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
-                                <li><NavLink to='/dashboard/allUsers'> <CgProfile className="text-xl"></CgProfile> All Users</NavLink> </li>
-                                <li><NavLink to='/dashboard/all-donation-requests'> <CgProfile className="text-xl"></CgProfile>All Donation Request </NavLink></li>
-                                <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
-                                <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
-                                <li><NavLink to='/dashboard/content-management'> <CgProfile className="text-xl"></CgProfile>Content Management </NavLink></li>
+                                <li><NavLink to='/dashboard/allUsers'> <FaUsers className="text-xl"></FaUsers> All Users</NavLink> </li>
+                                <li><NavLink to='/dashboard/all-donation-requests'> <BiDonateHeart className="text-xl"></BiDonateHeart>All Donation Request </NavLink></li>
+                                <li><NavLink to='/dashboard/my-donation-requests'> <BiSolidDonateBlood className="text-xl"></BiSolidDonateBlood>My Donation Request </NavLink></li>
+                                <li><NavLink to='/dashboard/create-donation-request'> <IoCreateOutline className="text-xl"></IoCreateOutline>Create Donation Request </NavLink></li>
+                                <li><NavLink to='/dashboard/content-management'> <MdAddToDrive className="text-xl"></MdAddToDrive>Content Management </NavLink></li>
                             </ul>
                             :
                             isVolunteer ?
                                 <ul className="menu uppercase w-full font-semibold">
                                     <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
-                                    <li><NavLink to='/dashboard/all-donation-requests'> <CgProfile className="text-xl"></CgProfile>All Donation Request </NavLink></li>
-                                    <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
-                                    <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
-                                    <li><NavLink to='/dashboard/content-management'> <CgProfile className="text-xl"></CgProfile>Content Management </NavLink></li>
+                                    <li><NavLink to='/dashboard/all-donation-requests'> <BiDonateHeart className="text-xl"></BiDonateHeart>All Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/my-donation-requests'> <BiSolidDonateBlood className="text-xl"></BiSolidDonateBlood>My Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/create-donation-request'> <IoCreateOutline className="text-xl"></IoCreateOutline>Create Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/content-management'> <MdAddToDrive className="text-xl"></MdAddToDrive>Content Management </NavLink></li>
                                 </ul>
                                 :
                                 <ul className="menu uppercase w-full font-semibold">
                                     <li><NavLink to='/dashboard/profile'> <CgProfile className="text-xl"></CgProfile> Profile</NavLink> </li>
-                                    <li><NavLink to='/dashboard/my-donation-requests'> <CgProfile className="text-xl"></CgProfile>My Donation Request </NavLink></li>
-                                    <li><NavLink to='/dashboard/create-donation-request'> <CgProfile className="text-xl"></CgProfile>Create Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/my-donation-requests'> <BiSolidDonateBlood className="text-xl"></BiSolidDonateBlood>My Donation Request </NavLink></li>
+                                    <li><NavLink to='/dashboard/create-donation-request'> <IoCreateOutline className="text-xl"></IoCreateOutline>Create Donation Request </NavLink></li>
                                 </ul>
                     }
 
@@ -50,8 +53,8 @@ const DashboardLayout = () => {
                     {/* Shared */}
                     <ul className="menu uppercase font-semibold">
                         <li><NavLink to="/"> <FaHome className="text-xl"></FaHome> Home</NavLink> </li>
-                        <li><NavLink to="/blood-donation-request"> <FaHome className="text-xl"></FaHome> Blood Donation Request</NavLink> </li>
-                        <li><NavLink to="/search-page"> <FaHome className="text-xl"></FaHome> Search Donor</NavLink> </li>
+                        <li><NavLink to="/blood-donation-request"> <MdAddLocationAlt className="text-xl"></MdAddLocationAlt> Blood Donation Request</NavLink> </li>
+                        <li><NavLink to="/search-page"> <FaSearch className="text-xl"></FaSearch > Search Donor</NavLink> </li>
                     </ul>
                 </aside>
                 {/* Main Content */}
