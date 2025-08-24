@@ -118,7 +118,7 @@ const AllBloodDonationRequest = () => {
                                 filterDonationRequest.map((donation, index) => <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{donation.recipientName}</td>
-                                    <td>{donation.district},<br /> {donation.upazila}</td>
+                                    <td>{donation.division},<br /> {donation.district}</td>
                                     <td>{donation.donationDate}, <br /> {donation.donationTime}</td>
                                     <td>{donation.hospitalName}</td>
                                     <td>{donation.bloodGroup}</td>

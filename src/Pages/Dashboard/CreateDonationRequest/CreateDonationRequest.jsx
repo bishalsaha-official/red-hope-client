@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
+import useDivisions from "../../../Hooks/useDivisions";
 import useDistrict from "../../../Hooks/useDistrict";
-import useUpazilas from "../../../Hooks/useUpazilas";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
 const CreateDonationRequest = () => {
-    const [upazilas] = useUpazilas()
+    const [divisions] = useDivisions()
     const [districts] = useDistrict()
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
@@ -21,8 +21,8 @@ const CreateDonationRequest = () => {
             requesterEmail: data.requesterEmail,
             recipientName: data.recipientName,
             bloodGroup: data.bloodGroup,
+            division: data.division,
             district: data.district,
-            upazila: data.upazila,
             donationDate: data.donationDate,
             donationTime: data.donationTime,
             fullAddress: data.fullAddress,
@@ -102,8 +102,19 @@ const CreateDonationRequest = () => {
                     </div>
                 </div>
 
-                {/* District and Upazila Row */}
+                {/* District and divisions Row */}
                 <div className="grid md:grid-cols-2 gap-5 mb-3">
+                    {/* Recipient divisions */}
+                    <div className="form-control">
+                        <label className="label font-bold">Division:</label>
+                        <select {...register("division", { required: true })} className="select select-secondary w-full text-xl">
+                            <option value="">Select Division</option>
+                            {
+                                divisions.map((division, index) => <option key={index} value={division.name}>{division.name}</option>)
+                            }
+                        </select>
+                        {errors.division && <p>Please select division group</p>}
+                    </div>
                     {/* Recipient District */}
                     <div className="form-control">
                         <label className="label font-bold">District:</label>
@@ -115,20 +126,8 @@ const CreateDonationRequest = () => {
                         </select>
                         {errors.district && <p>Please select district group</p>}
                     </div>
-
-                    {/* Recipient upazila */}
-                    <div className="form-control">
-                        <label className="label font-bold">Upazila:</label>
-                        <select {...register("upazila", { required: true })} className="select select-secondary w-full text-xl">
-                            <option value="">Select Upazila</option>
-                            {
-                                upazilas.map((upazila, index) => <option key={index} value={upazila.name}>{upazila.name}</option>)
-                            }
-                        </select>
-                        {errors.upazila && <p>Please select upazila group</p>}
-                    </div>
                 </div>
-
+                
                 {/* Hospital and Address Row */}
                 <div className="grid md:grid-cols-2 gap-5 mb-3">
                     {/* hospital name */}
@@ -166,7 +165,7 @@ const CreateDonationRequest = () => {
                         />
                         {errors.donationDate && <p>Please select donation date</p>}
                     </div>
-                    
+
                     {/* donation time */}
                     <div className="form-control">
                         <label className="label font-bold">Donation time:</label>

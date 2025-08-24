@@ -5,10 +5,10 @@ import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import donor from '../../assets/register/donor.jpg'
 import useDistrict from "../../Hooks/useDistrict";
-import useUpazilas from "../../Hooks/useUpazilas";
+import useDivisions from "../../Hooks/useDivisions";
 
 const Register = () => {
-    const [upazilas] = useUpazilas()
+    const [divisions] = useDivisions()
     const [districts] = useDistrict()
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const password = watch("password");
@@ -52,8 +52,8 @@ const Register = () => {
                             name: data.name,
                             image: imageUrl,
                             bloodGroup: data.bloodGroup,
+                            division: data.division,
                             district: data.district,
-                            upazila: data.upazila,
                             role: "donor",
                             status: "active"
                         };
@@ -114,7 +114,16 @@ const Register = () => {
                         </select>
                         {errors.bloodGroup && <p className="text-[#EF3D32] text-sm">Blood group is required</p>}
 
-                        {/* District */}
+                        {/* Divisions */}
+                        <select {...register("division", { required: true })} className="select select-bordered w-full">
+                            <option value="">Select Division</option>
+                            {
+                                divisions.map(division => <option key={division.id} value={division.name}>{division.name}</option>)
+                            }
+                        </select>
+                        {errors.division && <p className="text-[#EF3D32] text-sm">Division is required</p>}
+
+                        {/* Districts */}
                         <select {...register("district", { required: true })} className="select select-bordered w-full">
                             <option value="">Select District</option>
                             {
@@ -122,15 +131,6 @@ const Register = () => {
                             }
                         </select>
                         {errors.district && <p className="text-[#EF3D32] text-sm">District is required</p>}
-
-                        {/* Upazila */}
-                        <select {...register("upazila", { required: true })} className="select select-bordered w-full">
-                            <option value="">Select Upazila</option>
-                            {
-                                upazilas.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)
-                            }
-                        </select>
-                        {errors.upazila && <p className="text-[#EF3D32] text-sm">Upazila is required</p>}
 
                         {/* Password */}
                         <input type="password" placeholder="Password" {...register("password", {
