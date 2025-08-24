@@ -11,7 +11,9 @@ const BloodDonationDetails = () => {
 
     const handleUpdateItem = async (id) => {
         const updateInfo = {
-            status: "inprogress"
+            status: "inprogress",
+            donorName: user.displayName,
+            donorEmail: user.email
         }
         const res = await axiosPublic.patch(`/donation-request/${id}`, updateInfo)
         if (res.data.modifiedCount > 0) {
@@ -45,8 +47,8 @@ const BloodDonationDetails = () => {
                     <div className="space-y-3">
                         <p><span className="font-semibold text-gray-700">Hospital:</span> {request.hospitalName}</p>
                         <p><span className="font-semibold text-gray-700">Address:</span> {request.fullAddress}</p>
+                        <p><span className="font-semibold text-gray-700">Division:</span> {request.division}</p>
                         <p><span className="font-semibold text-gray-700">District:</span> {request.district}</p>
-                        <p><span className="font-semibold text-gray-700">Upazila:</span> {request.upazila}</p>
                         <p><span className="font-semibold text-gray-700">Message:</span> {request.requestMessage}</p>
                     </div>
                 </div>

@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: '/search-page',
+                path: '/search-donor',
                 element: <SearchPage></SearchPage>
             },
             {

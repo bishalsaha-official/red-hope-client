@@ -10,7 +10,10 @@ const MyDonationRequest = () => {
 
     // Update Donation Status inprogress to done
     const handleStatusDone = async (id) => {
-        const updateStatus = { status: 'done' }
+        const updateStatus = { 
+            status: 'done' 
+        }
+
         const res = await axiosSecure.patch(`/donation-request/${id}`, updateStatus)
         if (res.data.modifiedCount > 0) {
             refetch()
@@ -119,12 +122,12 @@ const MyDonationRequest = () => {
                                                         <button onClick={() => handleStatusCancel(donation._id)} className="btn btn-xs btn-warning text-white">Cancel</button>
                                                     </div>
                                                     <div>
-                                                        <small>{donation.requesterName}</small><br />
-                                                        <small>{donation.requesterEmail}</small>
+                                                        <small>{donation.donorName}</small><br />
+                                                        <small>{donation.donorEmail}</small>
                                                     </div>
                                                 </>
                                                 :
-                                                <button className="btn btn-success btn-sm text-white">{donation.status}...</button>
+                                                <button className="btn btn-success w-full btn-sm text-white">{donation.status}</button>
                                         }
                                     </td>
                                     <td>

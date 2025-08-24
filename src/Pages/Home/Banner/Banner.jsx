@@ -18,7 +18,7 @@ const Banner = () => {
                     <Link to='/register'>
                         <button className='btn m-3 bg-[#EF3D32] text-white border-0 px-10 py-5'>Join as a Donor</button>
                     </Link>
-                    <Link to="/search-page">
+                    <Link to="/search-donor">
                         <button className='btn bg-white text-[#EF3D32] border-0 px-10 py-5'>Search Donors</button>
                     </Link>
                 </div>
